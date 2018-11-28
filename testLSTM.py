@@ -55,8 +55,21 @@ print(validation[0])
 model = load_model('model.h5')
 model.summary()
 
+#classes = ['A','C','D','E','F','G','H','I','K','L','M','N','P','Q','R','S','T','V','W','Y']
+
+#MKTAYIAKQ
+#RQISFVKSHFSRQLEERLGLIEVQAPILSRVGDGTQD
 test = []
+test.append(d1['M'])
+test.append(d1['K'])
+test.append(d1['T'])
 test.append(d1['A'])
+test.append(d1['Y'])
+test.append(d1['I'])
+test.append(d1['A'])
+test.append(d1['K'])
+test.append(d1['Q'])
+test.append(d1['R'])
 
 for _ in range(0,99-len(test)):
 	test.append(d1['0'])
@@ -70,6 +83,8 @@ for c in prediction:
 		results.append(classes[x])
 
 str1 = ''.join(results)
+print(str1)
+
 valStr = ''.join(validation)
 
 maxLen = 0

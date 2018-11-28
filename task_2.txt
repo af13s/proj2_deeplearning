@@ -1,0 +1,37 @@
+First you need to explain how you initialize the weights and choose the hyperparameters and the optimizer
+for your network.
+
+Then you need to train a recurrent neural network using the given dataset.
+
+You need to plot the loss, accuracy, and perplexity on both the training set and validation set with respect to the epochs.
+
+One of the advantages of recurrent neural networks using LSTM or other gated cells is that they can capture
+the long-term dependencies in the data well.
+
+Here you need to find out the longest dependencies your network is capable of capturing experimentally.
+
+You can design/use any reasonable method.
+
+One way is to change one or more letters in sequences and see when the change(s) will have no effect. You need to describe your method clearly and document your results
+
+
+
+###
+
+First of all, there is a difference between the weights of a LSTM (the usual parameter set of a ANN), which are by default also initialized by the Glorot or also known as the Xavier initializer (as mentioned in the question).
+
+A different aspect is the cell state and the state of the initial recurrent input to the LSTM. Those are initialized by a matrix usually denoted as initial_state.
+
+Leaving us with the question, how to initialize this initial_state:
+
+Zero State Initialization is good practice if the impact of initialization is low
+The default approach to initializing the state of an RNN is to use a zero state. This often works well, particularly for sequence-to-sequence tasks like language modeling where the proportion of outputs that are significantly impacted by the initial state is small.
+
+Zero State Initialization in each batch can lead to overfitting
+Zero Initialization for each batch will lead to the following: Losses at the early steps of a sequence-to-sequence model (i.e., those immediately after a state reset) will be larger than those at later steps, because there is less history. Thus, their contribution to the gradient during learning will be relatively higher. But if all state resets are associated with a zero-state, the model can (and will) learn how to compensate for precisely this. As the ratio of state resets to total observations increases, the model parameters will become increasingly tuned to this zero state, which may affect performance on later time steps.
+
+Do we have other options?
+One simple solution is to make the initial state noisy (to decrease the loss for the first time step). Look here for details and other ideas
+
+
+

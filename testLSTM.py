@@ -1,12 +1,12 @@
-import os
-os.environ['CUDA_VISIBLE_DEVICES'] = '0'
+# import os
+# os.environ['CUDA_VISIBLE_DEVICES'] = '0'
 
-import tensorflow as tf
-from keras.backend.tensorflow_backend import set_session
-config = tf.ConfigProto()
-config.gpu_options.allow_growth = True
-sess = tf.Session(config=config)
-set_session(sess)  # set this TensorFlow session as the default session for Keras
+# import tensorflow as tf
+# from keras.backend.tensorflow_backend import set_session
+# config = tf.ConfigProto()
+# config.gpu_options.allow_growth = True
+# sess = tf.Session(config=config)
+# set_session(sess)  # set this TensorFlow session as the default session for Keras
 from keras.models import load_model
 from tqdm import tqdm
 import pandas as pd

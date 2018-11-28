@@ -53,18 +53,33 @@ print(validation[0])
 # print(encodedValidation.shape)
 
 model = load_model('model.h5')
-
+model.summary()
 
 test = []
 test.append(d1['A'])
 
-for _ in range()
+for _ in range(0,99-len(test)):
+	test.append(d1['0'])
 
 test = np.expand_dims(test, axis=0)
-test = np.expand_dims(test, axis=0)
+prediction = model.predict_classes(test)
 
-print(test.shape)
+results = []
+for c in prediction:
+	for x in c:
+		results.append(classes[x])
 
-print(model.predict_classes(test))
+str1 = ''.join(results)
+valStr = ''.join(validation)
 
-model.summary()
+maxLen = 0
+for i in range(len(str1)):
+	string = str1[:i]
+	if string in valStr:
+		print(string, 'in')
+		maxLen = len(string)
+
+print(maxLen)
+
+
+

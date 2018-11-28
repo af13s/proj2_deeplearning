@@ -136,7 +136,7 @@ model = load_model('model.h5')
 model.summary()
 
 model.compile(loss=keras.losses.categorical_crossentropy, optimizer=Adam(lr=0.001), metrics=['accuracy'])
-history = model.fit(trainX, trainY, batch_size=256, epochs=50, verbose=1, validation_data=(testX,testY))
+history = model.fit(trainX, trainY, batch_size=256, epochs=50, verbose=2, validation_data=(testX,testY))
 
 plot_results(history,50)
 

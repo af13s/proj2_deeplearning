@@ -1,0 +1,49 @@
+Using TensorFlow backend.
+2018-11-28 06:56:48.866364: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 AVX512F FMA
+2018-11-28 06:56:49.044760: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1411] Found device 0 with properties: 
+name: Quadro GP100 major: 6 minor: 0 memoryClockRate(GHz): 1.4425
+pciBusID: 0000:b3:00.0
+totalMemory: 15.89GiB freeMemory: 14.12GiB
+2018-11-28 06:56:49.044789: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1490] Adding visible gpu devices: 0
+2018-11-28 06:56:49.255561: I tensorflow/core/common_runtime/gpu/gpu_device.cc:971] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-11-28 06:56:49.255595: I tensorflow/core/common_runtime/gpu/gpu_device.cc:977]      0 
+2018-11-28 06:56:49.255600: I tensorflow/core/common_runtime/gpu/gpu_device.cc:990] 0:   N 
+2018-11-28 06:56:49.255768: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1103] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 13675 MB memory) -> physical GPU (device: 0, name: Quadro GP100, pci bus id: 0000:b3:00.0, compute capability: 6.0)
+Loading data
+/home/cfarzaneh/anaconda3/envs/tensorflow/lib/python3.6/site-packages/sklearn/preprocessing/_encoders.py:363: FutureWarning: The handling of integer data will change in version 0.22. Currently, the categories are determined based on the range [0, max(values)], while in the future they will be determined based on the unique values.
+If you want the future behaviour and silence this warning, you can specify "categories='auto'".
+In case you used a LabelEncoder before this OneHotEncoder to convert the categories to integers, then you can now use the OneHotEncoder directly.
+  warnings.warn(msg, FutureWarning)
+  0%|          | 0/43149 [00:00<?, ?it/s] 15%|█▌        | 6517/43149 [00:00<00:00, 65165.71it/s] 33%|███▎      | 14133/43149 [00:00<00:00, 68114.59it/s] 51%|█████     | 21906/43149 [00:00<00:00, 70738.16it/s] 68%|██████▊   | 29506/43149 [00:00<00:00, 72238.46it/s] 86%|████████▋ | 37263/43149 [00:00<00:00, 73759.22it/s]100%|██████████| 43149/43149 [00:00<00:00, 74042.11it/s]
+train Shape:  (43149, 100, 21)
+  0%|          | 0/8629 [00:00<?, ?it/s] 88%|████████▊ | 7622/8629 [00:00<00:00, 76210.44it/s]100%|██████████| 8629/8629 [00:00<00:00, 75233.80it/s]
+validation Shape:  (8629, 100, 21)
+(43149, 99, 21)
+(43149, 99, 21)
+(8629, 99, 21)
+(8629, 99, 21)
+_________________________________________________________________
+Layer (type)                 Output Shape              Param #   
+=================================================================
+lstm_1 (LSTM)                (None, 99, 512)           1093632   
+_________________________________________________________________
+lstm_2 (LSTM)                (None, 99, 512)           2099200   
+_________________________________________________________________
+lstm_3 (LSTM)                (None, 99, 512)           2099200   
+_________________________________________________________________
+dropout_1 (Dropout)          (None, 99, 512)           0         
+_________________________________________________________________
+time_distributed_1 (TimeDist (None, 99, 21)            10773     
+=================================================================
+Total params: 5,302,805
+Trainable params: 5,302,805
+Non-trainable params: 0
+_________________________________________________________________
+Train on 43149 samples, validate on 8629 samples
+Epoch 1/50
+ - 76s - loss: 1.0466 - acc: 0.5887 - val_loss: 1.3003 - val_acc: 0.5428
+Epoch 2/50
+ - 75s - loss: 1.0325 - acc: 0.5925 - val_loss: 1.2990 - val_acc: 0.5435
+Epoch 3/50
+ - 75s - loss: 1.0312 - acc: 0.5930 - val_loss: 1.3060 - val_acc: 0.5443
+Epoch 4/50

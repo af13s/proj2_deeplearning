@@ -16,6 +16,7 @@ from keras.optimizers import Adam
 import pandas as pd
 import numpy as np
 from tqdm import tqdm
+from keras.models import load_model
 
 print('Loading data')
 
@@ -25,11 +26,30 @@ temp = temp.read().splitlines()
 train = []
 validation = []
 
+# for i in range(len(temp)):
+# 	if (i+1)% 5 == 0:
+# 		validation.append(temp[i])
+# 	else:
+# 		train.append(temp[i])
+
 for i in range(len(temp)):
-	if (i+1)% 5 == 0:
+	if (i+1)% 51 == 0:
 		validation.append(temp[i])
-	else:
+	elif (i+1)% 10 == 0:
 		train.append(temp[i])
+
+def plot_results(history, epochs):
+	plt.style.use("ggplot")
+	plt.figure()
+	plt.plot(np.arange(0, epochs), history.history["loss"], label="train_loss")
+	plt.plot(np.arange(0, epochs), history.history["val_loss"], label="val_loss")
+	plt.plot(np.arange(0, epochs), history.history["acc"], label="train_acc")
+	plt.plot(np.arange(0, epochs), history.history["val_acc"], label="val_acc")
+	plt.title("Training Loss and Accuracy")
+	plt.xlabel("Epoch #")
+	plt.ylabel("Loss/Accuracy")
+	plt.legend(loc="upper left")
+	plt.show()
 
 classes = ['A','C','D','E','F','G','H','I','K','L','M','N','P','Q','R','S','T','V','W','Y','\n']
 protein_label_encoder = pd.factorize(classes)
@@ -57,7 +77,6 @@ encodedTrain = np.array(encodedTrain)
 encodedTrain = encodedTrain.reshape(-1,N,21)
 
 print('train Shape: ', encodedTrain.shape)
-
 
 encodedValidation = []
 for line in tqdm(validation):
@@ -102,27 +121,23 @@ testY = np.array(testY)
 print(testX.shape)
 print(testY.shape)
 
-
 vocabulary = 21
-hidden_size = 128
+hidden_size = 512
 
-model = Sequential()
-#model.add(Embedding(vocabulary,hidden_size,input_length=N-1))
-model.add(LSTM(hidden_size, input_shape=(N-1, 21), return_sequences=True))
-model.add(LSTM(hidden_size, return_sequences=True))
-model.add(Dropout(0.5))
-model.add(TimeDistributed(Dense(vocabulary, activation='softmax')))
+# model = Sequential()
+# model.add(LSTM(hidden_size, input_shape=(N-1, 21), return_sequences=True))
+# model.add(LSTM(hidden_size, return_sequences=True))
+# model.add(LSTM(hidden_size, return_sequences=True))
+# model.add(Dropout(0.5))
+# model.add(TimeDistributed(Dense(vocabulary, activation='softmax')))
+
+model = load_model('model.h5')
 
 model.summary()
 
 model.compile(loss=keras.losses.categorical_crossentropy, optimizer=Adam(lr=0.001), metrics=['accuracy'])
+history = model.fit(trainX, trainY, batch_size=256, epochs=50, verbose=1, validation_data=(testX,testY))
 
-model.fit(trainX, trainY, batch_size=512, epochs=10, verbose=1)
+plot_results(history,50)
 
-# print("score: ", result[0])
-# print("loss: ", result[1])
-
-
-
-
-
+model.save("model.h5")

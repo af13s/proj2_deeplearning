@@ -13,6 +13,7 @@ from keras.models import Sequential
 from keras.layers import Dense, Embedding, LSTM, Dropout, TimeDistributed
 from sklearn.preprocessing import OneHotEncoder
 from keras.optimizers import Adam
+import matplotlib.pyplot as plt
 import pandas as pd
 import numpy as np
 from tqdm import tqdm
@@ -49,7 +50,7 @@ def plot_results(history, epochs):
 	plt.xlabel("Epoch #")
 	plt.ylabel("Loss/Accuracy")
 	plt.legend(loc="upper left")
-	plt.show()
+	plt.savefig("results.png")
 
 classes = ['A','C','D','E','F','G','H','I','K','L','M','N','P','Q','R','S','T','V','W','Y','\n']
 protein_label_encoder = pd.factorize(classes)
@@ -64,9 +65,10 @@ N = 100
 encodedTrain = []
 for line in tqdm(train):
 	if len(line) < N:
-		array = ['0' for _ in range(0,N-len(line))]
+		array = ['0' for _ in range(0,N-1-len(line))]
 		line = array + list(line[0:N])
 		line = ''.join(line)
+		line += '\n'
 	else:
 		line = line[0:N]
 	for i,aminoacid in enumerate(line):
@@ -81,9 +83,10 @@ print('train Shape: ', encodedTrain.shape)
 encodedValidation = []
 for line in tqdm(validation):
 	if len(line) < N:
-		array = ['0' for _ in range(0,N-len(line))]
+		array = ['0' for _ in range(0,N-1-len(line))]
 		line = array + list(line[0:N])
 		line = ''.join(line)
+		line += '\n'
 	else:
 		line = line[0:N]
 	for i,aminoacid in enumerate(line):
@@ -105,9 +108,6 @@ for sample in encodedTrain:
 trainX = np.array(trainX)
 trainY = np.array(trainY)
 
-print(trainX.shape)
-print(trainY.shape)
-
 testX = []
 testY = []
 
@@ -118,26 +118,25 @@ for sample in encodedValidation:
 testX = np.array(testX)
 testY = np.array(testY)
 
-print(testX.shape)
-print(testY.shape)
-
 vocabulary = 21
 hidden_size = 512
 
-# model = Sequential()
-# model.add(LSTM(hidden_size, input_shape=(N-1, 21), return_sequences=True))
-# model.add(LSTM(hidden_size, return_sequences=True))
-# model.add(LSTM(hidden_size, return_sequences=True))
-# model.add(Dropout(0.5))
-# model.add(TimeDistributed(Dense(vocabulary, activation='softmax')))
+model = Sequential()
+model.add(LSTM(hidden_size, input_shape=(N-1, 21), return_sequences=True))
+model.add(LSTM(hidden_size, return_sequences=True))
+model.add(LSTM(hidden_size, return_sequences=True))
+model.add(Dropout(0.5))
+model.add(TimeDistributed(Dense(vocabulary, activation='softmax')))
 
-model = load_model('model.h5')
+# model = load_model('model.h5')
 
 model.summary()
 
+epochs = 250
+
 model.compile(loss=keras.losses.categorical_crossentropy, optimizer=Adam(lr=0.001), metrics=['accuracy'])
-history = model.fit(trainX, trainY, batch_size=256, epochs=50, verbose=2, validation_data=(testX,testY))
+history = model.fit(trainX, trainY, batch_size=256, epochs=epochs, verbose=2, validation_data=(testX,testY))
 
-plot_results(history,50)
+plot_results(history,epochs)
 
-model.save("model.h5")
+model.save("modelNew.h5")

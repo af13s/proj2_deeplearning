@@ -1,27 +1,23 @@
 Using TensorFlow backend.
-2018-11-28 06:56:48.866364: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 AVX512F FMA
-2018-11-28 06:56:49.044760: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1411] Found device 0 with properties: 
+2018-12-02 11:53:03.929947: I tensorflow/core/platform/cpu_feature_guard.cc:141] Your CPU supports instructions that this TensorFlow binary was not compiled to use: SSE4.1 SSE4.2 AVX AVX2 AVX512F FMA
+2018-12-02 11:53:04.083956: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1411] Found device 0 with properties: 
 name: Quadro GP100 major: 6 minor: 0 memoryClockRate(GHz): 1.4425
 pciBusID: 0000:b3:00.0
-totalMemory: 15.89GiB freeMemory: 14.12GiB
-2018-11-28 06:56:49.044789: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1490] Adding visible gpu devices: 0
-2018-11-28 06:56:49.255561: I tensorflow/core/common_runtime/gpu/gpu_device.cc:971] Device interconnect StreamExecutor with strength 1 edge matrix:
-2018-11-28 06:56:49.255595: I tensorflow/core/common_runtime/gpu/gpu_device.cc:977]      0 
-2018-11-28 06:56:49.255600: I tensorflow/core/common_runtime/gpu/gpu_device.cc:990] 0:   N 
-2018-11-28 06:56:49.255768: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1103] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 13675 MB memory) -> physical GPU (device: 0, name: Quadro GP100, pci bus id: 0000:b3:00.0, compute capability: 6.0)
+totalMemory: 15.89GiB freeMemory: 13.63GiB
+2018-12-02 11:53:04.083986: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1490] Adding visible gpu devices: 0
+2018-12-02 11:53:04.292955: I tensorflow/core/common_runtime/gpu/gpu_device.cc:971] Device interconnect StreamExecutor with strength 1 edge matrix:
+2018-12-02 11:53:04.292990: I tensorflow/core/common_runtime/gpu/gpu_device.cc:977]      0 
+2018-12-02 11:53:04.292996: I tensorflow/core/common_runtime/gpu/gpu_device.cc:990] 0:   N 
+2018-12-02 11:53:04.293178: I tensorflow/core/common_runtime/gpu/gpu_device.cc:1103] Created TensorFlow device (/job:localhost/replica:0/task:0/device:GPU:0 with 13197 MB memory) -> physical GPU (device: 0, name: Quadro GP100, pci bus id: 0000:b3:00.0, compute capability: 6.0)
 Loading data
 /home/cfarzaneh/anaconda3/envs/tensorflow/lib/python3.6/site-packages/sklearn/preprocessing/_encoders.py:363: FutureWarning: The handling of integer data will change in version 0.22. Currently, the categories are determined based on the range [0, max(values)], while in the future they will be determined based on the unique values.
 If you want the future behaviour and silence this warning, you can specify "categories='auto'".
 In case you used a LabelEncoder before this OneHotEncoder to convert the categories to integers, then you can now use the OneHotEncoder directly.
   warnings.warn(msg, FutureWarning)
-  0%|          | 0/43149 [00:00<?, ?it/s] 15%|█▌        | 6517/43149 [00:00<00:00, 65165.71it/s] 33%|███▎      | 14133/43149 [00:00<00:00, 68114.59it/s] 51%|█████     | 21906/43149 [00:00<00:00, 70738.16it/s] 68%|██████▊   | 29506/43149 [00:00<00:00, 72238.46it/s] 86%|████████▋ | 37263/43149 [00:00<00:00, 73759.22it/s]100%|██████████| 43149/43149 [00:00<00:00, 74042.11it/s]
+  0%|          | 0/43149 [00:00<?, ?it/s] 18%|█▊        | 7905/43149 [00:00<00:00, 79044.61it/s] 37%|███▋      | 15951/43149 [00:00<00:00, 79460.79it/s] 56%|█████▌    | 24052/43149 [00:00<00:00, 79916.73it/s] 74%|███████▍  | 32106/43149 [00:00<00:00, 80100.72it/s] 93%|█████████▎| 40204/43149 [00:00<00:00, 80360.12it/s]100%|██████████| 43149/43149 [00:00<00:00, 79355.24it/s]
 train Shape:  (43149, 100, 21)
-  0%|          | 0/8629 [00:00<?, ?it/s] 88%|████████▊ | 7622/8629 [00:00<00:00, 76210.44it/s]100%|██████████| 8629/8629 [00:00<00:00, 75233.80it/s]
+  0%|          | 0/8629 [00:00<?, ?it/s] 72%|███████▏  | 6172/8629 [00:00<00:00, 61713.58it/s]100%|██████████| 8629/8629 [00:00<00:00, 64580.14it/s]
 validation Shape:  (8629, 100, 21)
-(43149, 99, 21)
-(43149, 99, 21)
-(8629, 99, 21)
-(8629, 99, 21)
 _________________________________________________________________
 Layer (type)                 Output Shape              Param #   
 =================================================================
@@ -41,9 +37,102 @@ Non-trainable params: 0
 _________________________________________________________________
 Train on 43149 samples, validate on 8629 samples
 Epoch 1/50
- - 76s - loss: 1.0466 - acc: 0.5887 - val_loss: 1.3003 - val_acc: 0.5428
+ - 79s - loss: 0.9806 - acc: 0.6116 - val_loss: 1.2895 - val_acc: 0.5563
 Epoch 2/50
- - 75s - loss: 1.0325 - acc: 0.5925 - val_loss: 1.2990 - val_acc: 0.5435
+ - 77s - loss: 0.9687 - acc: 0.6149 - val_loss: 1.2998 - val_acc: 0.5587
 Epoch 3/50
- - 75s - loss: 1.0312 - acc: 0.5930 - val_loss: 1.3060 - val_acc: 0.5443
+ - 75s - loss: 0.9629 - acc: 0.6164 - val_loss: 1.3014 - val_acc: 0.5563
 Epoch 4/50
+ - 77s - loss: 0.9584 - acc: 0.6181 - val_loss: 1.2941 - val_acc: 0.5623
+Epoch 5/50
+ - 76s - loss: 0.9514 - acc: 0.6200 - val_loss: 1.2850 - val_acc: 0.5630
+Epoch 6/50
+ - 77s - loss: 0.9468 - acc: 0.6216 - val_loss: 1.3055 - val_acc: 0.5612
+Epoch 7/50
+ - 77s - loss: 0.9401 - acc: 0.6234 - val_loss: 1.2899 - val_acc: 0.5631
+Epoch 8/50
+ - 77s - loss: 0.9341 - acc: 0.6254 - val_loss: 1.2840 - val_acc: 0.5647
+Epoch 9/50
+ - 77s - loss: 0.9292 - acc: 0.6265 - val_loss: 1.3012 - val_acc: 0.5641
+Epoch 10/50
+ - 77s - loss: 0.9243 - acc: 0.6278 - val_loss: 1.2896 - val_acc: 0.5679
+Epoch 11/50
+ - 77s - loss: 0.9200 - acc: 0.6298 - val_loss: 1.2963 - val_acc: 0.5657
+Epoch 12/50
+ - 77s - loss: 0.9128 - acc: 0.6321 - val_loss: 1.3186 - val_acc: 0.5669
+Epoch 13/50
+ - 77s - loss: 0.9083 - acc: 0.6333 - val_loss: 1.2927 - val_acc: 0.5687
+Epoch 14/50
+ - 76s - loss: 0.9042 - acc: 0.6347 - val_loss: 1.2984 - val_acc: 0.5678
+Epoch 15/50
+ - 77s - loss: 0.9002 - acc: 0.6356 - val_loss: 1.2880 - val_acc: 0.5699
+Epoch 16/50
+ - 76s - loss: 0.8932 - acc: 0.6378 - val_loss: 1.2994 - val_acc: 0.5725
+Epoch 17/50
+ - 77s - loss: 0.8885 - acc: 0.6392 - val_loss: 1.2974 - val_acc: 0.5745
+Epoch 18/50
+ - 77s - loss: 0.8854 - acc: 0.6404 - val_loss: 1.2972 - val_acc: 0.5717
+Epoch 19/50
+ - 77s - loss: 0.8805 - acc: 0.6414 - val_loss: 1.3036 - val_acc: 0.5757
+Epoch 20/50
+ - 77s - loss: 0.8747 - acc: 0.6438 - val_loss: 1.3153 - val_acc: 0.5761
+Epoch 21/50
+ - 77s - loss: 0.8695 - acc: 0.6451 - val_loss: 1.2909 - val_acc: 0.5745
+Epoch 22/50
+ - 77s - loss: 0.8663 - acc: 0.6461 - val_loss: 1.2898 - val_acc: 0.5764
+Epoch 23/50
+ - 76s - loss: 0.8618 - acc: 0.6473 - val_loss: 1.2880 - val_acc: 0.5785
+Epoch 24/50
+ - 77s - loss: 0.8559 - acc: 0.6492 - val_loss: 1.3023 - val_acc: 0.5777
+Epoch 25/50
+ - 77s - loss: 0.8525 - acc: 0.6498 - val_loss: 1.2954 - val_acc: 0.5785
+Epoch 26/50
+ - 77s - loss: 0.8483 - acc: 0.6515 - val_loss: 1.2814 - val_acc: 0.5776
+Epoch 27/50
+ - 77s - loss: 0.8436 - acc: 0.6528 - val_loss: 1.2868 - val_acc: 0.5803
+Epoch 28/50
+ - 75s - loss: 0.8403 - acc: 0.6542 - val_loss: 1.2979 - val_acc: 0.5810
+Epoch 29/50
+ - 77s - loss: 0.8364 - acc: 0.6549 - val_loss: 1.2941 - val_acc: 0.5809
+Epoch 30/50
+ - 76s - loss: 0.8334 - acc: 0.6560 - val_loss: 1.3090 - val_acc: 0.5821
+Epoch 31/50
+ - 77s - loss: 0.8283 - acc: 0.6574 - val_loss: 1.2967 - val_acc: 0.5812
+Epoch 32/50
+ - 77s - loss: 0.8247 - acc: 0.6588 - val_loss: 1.2932 - val_acc: 0.5829
+Epoch 33/50
+ - 77s - loss: 0.8215 - acc: 0.6600 - val_loss: 1.2967 - val_acc: 0.5827
+Epoch 34/50
+ - 77s - loss: 0.8175 - acc: 0.6602 - val_loss: 1.3150 - val_acc: 0.5826
+Epoch 35/50
+ - 77s - loss: 0.8121 - acc: 0.6625 - val_loss: 1.3338 - val_acc: 0.5844
+Epoch 36/50
+ - 77s - loss: 0.8089 - acc: 0.6638 - val_loss: 1.3112 - val_acc: 0.5842
+Epoch 37/50
+ - 77s - loss: 0.8043 - acc: 0.6643 - val_loss: 1.3093 - val_acc: 0.5859
+Epoch 38/50
+ - 77s - loss: 0.8026 - acc: 0.6652 - val_loss: 1.3033 - val_acc: 0.5860
+Epoch 39/50
+ - 77s - loss: 0.8004 - acc: 0.6658 - val_loss: 1.3125 - val_acc: 0.5873
+Epoch 40/50
+ - 77s - loss: 0.7953 - acc: 0.6678 - val_loss: 1.3075 - val_acc: 0.5866
+Epoch 41/50
+ - 77s - loss: 0.7942 - acc: 0.6677 - val_loss: 1.3064 - val_acc: 0.5874
+Epoch 42/50
+ - 77s - loss: 0.7889 - acc: 0.6694 - val_loss: 1.3219 - val_acc: 0.5895
+Epoch 43/50
+ - 77s - loss: 0.7848 - acc: 0.6710 - val_loss: 1.3365 - val_acc: 0.5895
+Epoch 44/50
+ - 77s - loss: 0.7835 - acc: 0.6711 - val_loss: 1.3309 - val_acc: 0.5893
+Epoch 45/50
+ - 77s - loss: 0.7798 - acc: 0.6724 - val_loss: 1.3237 - val_acc: 0.5895
+Epoch 46/50
+ - 76s - loss: 0.7752 - acc: 0.6734 - val_loss: 1.3191 - val_acc: 0.5904
+Epoch 47/50
+ - 77s - loss: 0.7729 - acc: 0.6738 - val_loss: 1.3189 - val_acc: 0.5900
+Epoch 48/50
+ - 77s - loss: 0.7699 - acc: 0.6751 - val_loss: 1.3349 - val_acc: 0.5904
+Epoch 49/50
+ - 77s - loss: 0.7669 - acc: 0.6762 - val_loss: 1.3369 - val_acc: 0.5908
+Epoch 50/50
+ - 77s - loss: 0.7627 - acc: 0.6774 - val_loss: 1.3379 - val_acc: 0.5934

@@ -12,6 +12,7 @@ from tqdm import tqdm
 import pandas as pd
 import numpy as np
 from sklearn.preprocessing import OneHotEncoder
+import random
 
 print('Loading data')
 
@@ -32,69 +33,99 @@ onehot_array = protein_labels_1hot.toarray()
 d1 = dict(zip(classes,onehot_array.tolist()))
 d1['0']=[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0]
 
-
-print(validation[0])
-
-# N = 100
-
-# encodedValidation = []
-# for line in tqdm(validation):
-# 	if len(line) < N:
-# 		array = ['0' for _ in range(0,N-len(line))]
-# 		line = array + list(line[0:N])
-# 		line = ''.join(line)
-# 	else:
-# 		line = line[0:N]
-# 	for i,aminoacid in enumerate(line):
-# 		encoding = d1[aminoacid]
-# 		encodedValidation.append(encoding)
-
-# encodedValidation = np.array(encodedValidation)
-# print(encodedValidation.shape)
-
 model = load_model('model.h5')
 model.summary()
 
-#classes = ['A','C','D','E','F','G','H','I','K','L','M','N','P','Q','R','S','T','V','W','Y']
 
-#MKTAYIAKQ
-#RQISFVKSHFSRQLEERLGLIEVQAPILSRVGDGTQD
-test = []
-test.append(d1['M'])
-test.append(d1['K'])
-test.append(d1['T'])
-test.append(d1['A'])
-test.append(d1['Y'])
-test.append(d1['I'])
-test.append(d1['A'])
-test.append(d1['K'])
-test.append(d1['Q'])
-test.append(d1['R'])
+maxCount = 0
+for proteinSequence in tqdm(validation[:100]):
+	count = 0
+	if len(proteinSequence) < 99:
+		continue
+	sequence = list(proteinSequence[:99])
+	trueLabel = proteinSequence[99]
+	#print(''.join(sequence))
+	w = 0
+	while True:
 
-for _ in range(0,99-len(test)):
-	test.append(d1['0'])
+		randomLetter = random.choice(classes)
 
-test = np.expand_dims(test, axis=0)
-prediction = model.predict_classes(test)
+		while randomLetter == '\n':
+			randomLetter = random.choice(classes)
+		
+		#print(randomLetter)
 
-results = []
-for c in prediction:
-	for x in c:
-		results.append(classes[x])
+		index = random.randint(0,len(sequence)-1)
 
-str1 = ''.join(results)
-print(str1)
+		#print(index)
 
-valStr = ''.join(validation)
+		sequence[w] = randomLetter
 
-maxLen = 0
-for i in range(len(str1)):
-	string = str1[:i]
-	if string in valStr:
-		print(string, 'in')
-		maxLen = len(string)
+		#print(''.join(sequence))
+		
+		test = []
 
-print(maxLen)
+		for char in sequence:
+			test.append(d1[char])
+
+		test = np.expand_dims(test, axis=0)
+		prediction = model.predict_classes(test)
+
+		results = []
+		for c in prediction:
+			for x in c:
+				results.append(classes[x])
+
+		if results[-1] == trueLabel:
+			#print('Correct!')
+			count+=1
+			w+=1
+		else:
+			#print('Incorrect')
+			#print('Count',count)
+			if count > maxCount:
+				maxCount = count
+			break
 
 
+print(maxCount)
+quit()
 
+
+maxK = [0 for _ in range(20)]
+for k in range(20):
+	for proteinSequence in tqdm(validation[:1000]):
+		numCorrect = 0
+		predictionValue = True
+		while predictionValue == True:
+			trueLabel = proteinSequence[k]
+			sequence = list(proteinSequence[numCorrect:k+numCorrect])
+			test = []
+
+			for char in sequence:
+				test.append(d1[char])
+
+			temp = []
+			for _ in range(0,99-len(test)):
+				temp.append(d1['0'])
+
+			temp.extend(test)
+
+			test = np.expand_dims(temp, axis=0)
+			prediction = model.predict_classes(test)
+
+			results = []
+			for c in prediction:
+				for x in c:
+					results.append(classes[x])
+
+			if results[-1] == trueLabel:
+				numCorrect+=1
+			else:
+				predictionValue = False
+		if maxK[k] < numCorrect:
+			maxK[k] = numCorrect
+	print(k,maxK[k])
+
+
+print(maxK)
